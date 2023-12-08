@@ -301,9 +301,12 @@ causal_forest <- function(X, Y, W,
 #' @param object The trained forest.
 #' @param newdata Points at which predictions should be made. If NULL, makes out-of-bag
 #'                predictions on the training set instead (i.e., provides predictions at
-#'                Xi using only trees that did not use the i-th training example). Note
-#'                that this matrix should have the number of columns as the training
-#'                matrix, and that the columns must appear in the same order.
+#'                Xi using only trees that did not use the i-th training example). To
+#'                make predictions at new data points, provide a matrix with new values
+#'                of the covariates. Note the matrix should have the same number of columns
+#'                as the training matrix, and that the columns must appear in the same order.
+#'                To obtain predictions with error estimates on a test set, provide a list
+#'                with named elements "X", "Y.centered", and "W.centered".
 #' @param linear.correction.variables Optional subset of indexes for variables to be used in local
 #'                   linear prediction. If NULL, standard GRF prediction is used. Otherwise,
 #'                   we run a locally weighted linear regression on the included variables.
@@ -417,7 +420,13 @@ predict.causal_forest <- function(object, newdata = NULL,
 
    if (!is.null(newdata)) {
      validate_newdata(newdata, X, allow.na = allow.na)
-     test.data <- create_test_matrices(newdata)
+     if (is.list(newdata)) {
+       test.data <- create_train_matrices(newdata[["X"]], outcome = newdata[["Y.centered"]], treatment = newdata[["W.centered"]])
+       args[["estimate_error"]] <- TRUE
+     } else {
+       test.data <- create_test_matrices(newdata)
+       args[["estimate_error"]] <- FALSE
+     }
      if (!local.linear) {
        ret <- do.call.rcpp(causal_predict, c(train.data, test.data, args))
      } else {

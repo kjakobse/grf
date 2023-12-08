@@ -42,21 +42,23 @@ ForestPredictor::ForestPredictor(uint num_threads,
 std::vector<Prediction> ForestPredictor::predict(const Forest& forest,
                                                  const Data& train_data,
                                                  const Data& data,
-                                                 bool estimate_variance) const {
-  return predict(forest, train_data, data, estimate_variance, false);
+                                                 bool estimate_variance,
+                                                 bool estimate_error) const {
+  return predict(forest, train_data, data, estimate_variance, false, estimate_error);
 }
 
 std::vector<Prediction> ForestPredictor::predict_oob(const Forest& forest,
                                                      const Data& data,
                                                      bool estimate_variance) const {
-  return predict(forest, data, data, estimate_variance, true);
+  return predict(forest, data, data, estimate_variance, true, true);
 }
 
 std::vector<Prediction> ForestPredictor::predict(const Forest& forest,
                                                  const Data& train_data,
                                                  const Data& data,
                                                  bool estimate_variance,
-                                                 bool oob_prediction) const {
+                                                 bool oob_prediction,
+                                                 bool estimate_error) const {
   if (estimate_variance && forest.get_ci_group_size() <= 1) {
     throw std::runtime_error("To estimate variance during prediction, the forest must"
        " be trained with ci_group_size greater than 1.");
@@ -67,7 +69,7 @@ std::vector<Prediction> ForestPredictor::predict(const Forest& forest,
 
   return prediction_collector->collect_predictions(forest, train_data, data,
       leaf_nodes_by_tree, trees_by_sample,
-      estimate_variance, oob_prediction);
+      estimate_variance, estimate_error);
 }
 
 } // namespace grf

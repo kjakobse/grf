@@ -78,13 +78,21 @@ Rcpp::List causal_predict(const Rcpp::List& forest_object,
                           size_t outcome_index,
                           size_t treatment_index,
                           const Rcpp::NumericMatrix& test_matrix,
+                          size_t test_outcome_index,
+                          size_t test_treatment_index,
                           unsigned int num_threads,
-                          bool estimate_variance) {
+                          bool estimate_variance,
+                          bool estimate_error) {
   Data train_data = RcppUtilities::convert_data(train_matrix);
   train_data.set_outcome_index(outcome_index);
   train_data.set_treatment_index(treatment_index);
   train_data.set_instrument_index(treatment_index);
   Data data = RcppUtilities::convert_data(test_matrix);
+  if (estimate_error) {
+  data.set_outcome_index(test_outcome_index);
+  data.set_treatment_index(test_treatment_index);
+  data.set_instrument_index(test_treatment_index);
+  }
 
   Forest forest = RcppUtilities::deserialize_forest(forest_object);
 
