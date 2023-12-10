@@ -90,7 +90,7 @@ Rcpp::List instrumental_predict(const Rcpp::List& forest_object,
   Forest forest = RcppUtilities::deserialize_forest(forest_object);
 
   ForestPredictor predictor = instrumental_predictor(num_threads);
-  std::vector<Prediction> predictions = predictor.predict(forest, train_data, data, estimate_variance);
+  std::vector<Prediction> predictions = predictor.predict(forest, train_data, data, estimate_variance, false);
   Rcpp::List result = RcppUtilities::create_prediction_object(predictions);
 
   return result;

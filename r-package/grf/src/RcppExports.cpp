@@ -94,8 +94,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // causal_predict
-Rcpp::List causal_predict(const Rcpp::List& forest_object, const Rcpp::NumericMatrix& train_matrix, size_t outcome_index, size_t treatment_index, const Rcpp::NumericMatrix& test_matrix, unsigned int num_threads, bool estimate_variance);
-RcppExport SEXP _grf_causal_predict(SEXP forest_objectSEXP, SEXP train_matrixSEXP, SEXP outcome_indexSEXP, SEXP treatment_indexSEXP, SEXP test_matrixSEXP, SEXP num_threadsSEXP, SEXP estimate_varianceSEXP) {
+Rcpp::List causal_predict(const Rcpp::List& forest_object, const Rcpp::NumericMatrix& train_matrix, size_t outcome_index, size_t treatment_index, const Rcpp::NumericMatrix& test_matrix, size_t test_outcome_index, size_t test_treatment_index, unsigned int num_threads, bool estimate_variance, bool estimate_error);
+RcppExport SEXP _grf_causal_predict(SEXP forest_objectSEXP, SEXP train_matrixSEXP, SEXP outcome_indexSEXP, SEXP treatment_indexSEXP, SEXP test_matrixSEXP, SEXP test_outcome_indexSEXP, SEXP test_treatment_indexSEXP, SEXP num_threadsSEXP, SEXP estimate_varianceSEXP, SEXP estimate_errorSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -104,9 +104,12 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< size_t >::type outcome_index(outcome_indexSEXP);
     Rcpp::traits::input_parameter< size_t >::type treatment_index(treatment_indexSEXP);
     Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type test_matrix(test_matrixSEXP);
+    Rcpp::traits::input_parameter< size_t >::type test_outcome_index(test_outcome_indexSEXP);
+    Rcpp::traits::input_parameter< size_t >::type test_treatment_index(test_treatment_indexSEXP);
     Rcpp::traits::input_parameter< unsigned int >::type num_threads(num_threadsSEXP);
     Rcpp::traits::input_parameter< bool >::type estimate_variance(estimate_varianceSEXP);
-    rcpp_result_gen = Rcpp::wrap(causal_predict(forest_object, train_matrix, outcome_index, treatment_index, test_matrix, num_threads, estimate_variance));
+    Rcpp::traits::input_parameter< bool >::type estimate_error(estimate_errorSEXP);
+    rcpp_result_gen = Rcpp::wrap(causal_predict(forest_object, train_matrix, outcome_index, treatment_index, test_matrix, test_outcome_index, test_treatment_index, num_threads, estimate_variance, estimate_error));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -127,8 +130,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // ll_causal_predict
-Rcpp::List ll_causal_predict(const Rcpp::List& forest_object, const Rcpp::NumericMatrix& train_matrix, size_t outcome_index, size_t treatment_index, const Rcpp::NumericMatrix& test_matrix, std::vector<double> ll_lambda, bool ll_weight_penalty, std::vector<size_t> linear_correction_variables, unsigned int num_threads, bool estimate_variance);
-RcppExport SEXP _grf_ll_causal_predict(SEXP forest_objectSEXP, SEXP train_matrixSEXP, SEXP outcome_indexSEXP, SEXP treatment_indexSEXP, SEXP test_matrixSEXP, SEXP ll_lambdaSEXP, SEXP ll_weight_penaltySEXP, SEXP linear_correction_variablesSEXP, SEXP num_threadsSEXP, SEXP estimate_varianceSEXP) {
+Rcpp::List ll_causal_predict(const Rcpp::List& forest_object, const Rcpp::NumericMatrix& train_matrix, size_t outcome_index, size_t treatment_index, const Rcpp::NumericMatrix& test_matrix, size_t test_outcome_index, size_t test_treatment_index, std::vector<double> ll_lambda, bool ll_weight_penalty, std::vector<size_t> linear_correction_variables, unsigned int num_threads, bool estimate_variance, bool estimate_error);
+RcppExport SEXP _grf_ll_causal_predict(SEXP forest_objectSEXP, SEXP train_matrixSEXP, SEXP outcome_indexSEXP, SEXP treatment_indexSEXP, SEXP test_matrixSEXP, SEXP test_outcome_indexSEXP, SEXP test_treatment_indexSEXP, SEXP ll_lambdaSEXP, SEXP ll_weight_penaltySEXP, SEXP linear_correction_variablesSEXP, SEXP num_threadsSEXP, SEXP estimate_varianceSEXP, SEXP estimate_errorSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -137,12 +140,15 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< size_t >::type outcome_index(outcome_indexSEXP);
     Rcpp::traits::input_parameter< size_t >::type treatment_index(treatment_indexSEXP);
     Rcpp::traits::input_parameter< const Rcpp::NumericMatrix& >::type test_matrix(test_matrixSEXP);
+    Rcpp::traits::input_parameter< size_t >::type test_outcome_index(test_outcome_indexSEXP);
+    Rcpp::traits::input_parameter< size_t >::type test_treatment_index(test_treatment_indexSEXP);
     Rcpp::traits::input_parameter< std::vector<double> >::type ll_lambda(ll_lambdaSEXP);
     Rcpp::traits::input_parameter< bool >::type ll_weight_penalty(ll_weight_penaltySEXP);
     Rcpp::traits::input_parameter< std::vector<size_t> >::type linear_correction_variables(linear_correction_variablesSEXP);
     Rcpp::traits::input_parameter< unsigned int >::type num_threads(num_threadsSEXP);
     Rcpp::traits::input_parameter< bool >::type estimate_variance(estimate_varianceSEXP);
-    rcpp_result_gen = Rcpp::wrap(ll_causal_predict(forest_object, train_matrix, outcome_index, treatment_index, test_matrix, ll_lambda, ll_weight_penalty, linear_correction_variables, num_threads, estimate_variance));
+    Rcpp::traits::input_parameter< bool >::type estimate_error(estimate_errorSEXP);
+    rcpp_result_gen = Rcpp::wrap(ll_causal_predict(forest_object, train_matrix, outcome_index, treatment_index, test_matrix, test_outcome_index, test_treatment_index, ll_lambda, ll_weight_penalty, linear_correction_variables, num_threads, estimate_variance, estimate_error));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -744,9 +750,9 @@ static const R_CallMethodDef CallEntries[] = {
     {"_grf_compute_weights_oob", (DL_FUNC) &_grf_compute_weights_oob, 3},
     {"_grf_merge", (DL_FUNC) &_grf_merge, 1},
     {"_grf_causal_train", (DL_FUNC) &_grf_causal_train, 22},
-    {"_grf_causal_predict", (DL_FUNC) &_grf_causal_predict, 7},
+    {"_grf_causal_predict", (DL_FUNC) &_grf_causal_predict, 10},
     {"_grf_causal_predict_oob", (DL_FUNC) &_grf_causal_predict_oob, 6},
-    {"_grf_ll_causal_predict", (DL_FUNC) &_grf_ll_causal_predict, 10},
+    {"_grf_ll_causal_predict", (DL_FUNC) &_grf_ll_causal_predict, 13},
     {"_grf_ll_causal_predict_oob", (DL_FUNC) &_grf_ll_causal_predict_oob, 9},
     {"_grf_causal_survival_train", (DL_FUNC) &_grf_causal_survival_train, 23},
     {"_grf_causal_survival_predict", (DL_FUNC) &_grf_causal_survival_predict, 5},

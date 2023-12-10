@@ -21,16 +21,16 @@ causal_train <- function(train_matrix, outcome_index, treatment_index, sample_we
     .Call('_grf_causal_train', PACKAGE = 'grf', train_matrix, outcome_index, treatment_index, sample_weight_index, use_sample_weights, mtry, num_trees, min_node_size, sample_fraction, honesty, honesty_fraction, honesty_prune_leaves, ci_group_size, reduced_form_weight, alpha, imbalance_penalty, stabilize_splits, clusters, samples_per_cluster, compute_oob_predictions, num_threads, seed)
 }
 
-causal_predict <- function(forest_object, train_matrix, outcome_index, treatment_index, test_matrix, num_threads, estimate_variance) {
-    .Call('_grf_causal_predict', PACKAGE = 'grf', forest_object, train_matrix, outcome_index, treatment_index, test_matrix, num_threads, estimate_variance)
+causal_predict <- function(forest_object, train_matrix, outcome_index, treatment_index, test_matrix, test_outcome_index, test_treatment_index, num_threads, estimate_variance, estimate_error) {
+    .Call('_grf_causal_predict', PACKAGE = 'grf', forest_object, train_matrix, outcome_index, treatment_index, test_matrix, test_outcome_index, test_treatment_index, num_threads, estimate_variance, estimate_error)
 }
 
 causal_predict_oob <- function(forest_object, train_matrix, outcome_index, treatment_index, num_threads, estimate_variance) {
     .Call('_grf_causal_predict_oob', PACKAGE = 'grf', forest_object, train_matrix, outcome_index, treatment_index, num_threads, estimate_variance)
 }
 
-ll_causal_predict <- function(forest_object, train_matrix, outcome_index, treatment_index, test_matrix, ll_lambda, ll_weight_penalty, linear_correction_variables, num_threads, estimate_variance) {
-    .Call('_grf_ll_causal_predict', PACKAGE = 'grf', forest_object, train_matrix, outcome_index, treatment_index, test_matrix, ll_lambda, ll_weight_penalty, linear_correction_variables, num_threads, estimate_variance)
+ll_causal_predict <- function(forest_object, train_matrix, outcome_index, treatment_index, test_matrix, test_outcome_index, test_treatment_index, ll_lambda, ll_weight_penalty, linear_correction_variables, num_threads, estimate_variance, estimate_error) {
+    .Call('_grf_ll_causal_predict', PACKAGE = 'grf', forest_object, train_matrix, outcome_index, treatment_index, test_matrix, test_outcome_index, test_treatment_index, ll_lambda, ll_weight_penalty, linear_correction_variables, num_threads, estimate_variance, estimate_error)
 }
 
 ll_causal_predict_oob <- function(forest_object, train_matrix, outcome_index, treatment_index, ll_lambda, ll_weight_penalty, linear_correction_variables, num_threads, estimate_variance) {

@@ -48,7 +48,8 @@ public:
   std::vector<Prediction> predict(const Forest& forest,
                                   const Data& train_data,
                                   const Data& data,
-                                  bool estimate_variance) const;
+                                  bool estimate_variance,
+                                  bool estimate_error) const;
 
   std::vector<Prediction> predict_oob(const Forest& forest,
                                       const Data& data,
@@ -59,7 +60,8 @@ private:
                                   const Data& train_data,
                                   const Data& data,
                                   bool estimate_variance,
-                                  bool oob_prediction) const;
+                                  bool oob_prediction,
+                                  bool estimate_error) const;
 
 private:
   TreeTraverser tree_traverser;

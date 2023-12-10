@@ -80,7 +80,7 @@ Rcpp::List regression_predict(const Rcpp::List& forest_object,
   Forest forest = RcppUtilities::deserialize_forest(forest_object);
 
   ForestPredictor predictor = regression_predictor(num_threads);
-  std::vector<Prediction> predictions = predictor.predict(forest, train_data, data, estimate_variance);
+  std::vector<Prediction> predictions = predictor.predict(forest, train_data, data, estimate_variance, false);
 
   return RcppUtilities::create_prediction_object(predictions);
 }
@@ -157,7 +157,7 @@ Rcpp::List ll_regression_predict(const Rcpp::List& forest_object,
 
   ForestPredictor predictor = ll_regression_predictor(num_threads,
       ll_lambda, ll_weight_penalty, linear_correction_variables);
-  std::vector<Prediction> predictions = predictor.predict(deserialized_forest, train_data, data, estimate_variance);
+  std::vector<Prediction> predictions = predictor.predict(deserialized_forest, train_data, data, estimate_variance, false);
   Rcpp::List result = RcppUtilities::create_prediction_object(predictions);
 
   return result;

@@ -422,9 +422,14 @@ predict.causal_forest <- function(object, newdata = NULL,
      validate_newdata(newdata, X, allow.na = allow.na)
      if (is.list(newdata)) {
        test.data <- create_train_matrices(newdata[["X"]], outcome = newdata[["Y.centered"]], treatment = newdata[["W.centered"]])
+       names(test.data)[names(test.data) == "outcome.index"] <- "test.outcome.index"
+       names(test.data)[names(test.data) == "treatment.index"] <- "test.treatment.index"
+       names(test.data)[names(test.data) == "train.matrix"] <- "test.matrix"
        args[["estimate_error"]] <- TRUE
      } else {
        test.data <- create_test_matrices(newdata)
+       test.data[["test.outcome.index"]] <- 1L
+       test.data[["test.treatment.index"]] <- 1L
        args[["estimate_error"]] <- FALSE
      }
      if (!local.linear) {

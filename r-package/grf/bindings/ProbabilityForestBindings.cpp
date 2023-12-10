@@ -82,7 +82,7 @@ Rcpp::List probability_predict(const Rcpp::List& forest_object,
   Forest forest = RcppUtilities::deserialize_forest(forest_object);
 
   ForestPredictor predictor = probability_predictor(num_threads, num_classes);
-  std::vector<Prediction> predictions = predictor.predict(forest, train_data, data, estimate_variance);
+  std::vector<Prediction> predictions = predictor.predict(forest, train_data, data, estimate_variance, false);
 
   return RcppUtilities::create_prediction_object(predictions);
 }

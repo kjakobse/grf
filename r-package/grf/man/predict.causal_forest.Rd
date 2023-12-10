@@ -20,9 +20,12 @@
 
 \item{newdata}{Points at which predictions should be made. If NULL, makes out-of-bag
 predictions on the training set instead (i.e., provides predictions at
-Xi using only trees that did not use the i-th training example). Note
-that this matrix should have the number of columns as the training
-matrix, and that the columns must appear in the same order.}
+Xi using only trees that did not use the i-th training example). To
+make predictions at new data points, provide a matrix with new values
+of the covariates. Note the matrix should have the same number of columns
+as the training matrix, and that the columns must appear in the same order.
+To obtain predictions with error estimates on a test set, provide a list
+with named elements "X", "Y.centered", and "W.centered".}
 
 \item{linear.correction.variables}{Optional subset of indexes for variables to be used in local
 linear prediction. If NULL, standard GRF prediction is used. Otherwise,
