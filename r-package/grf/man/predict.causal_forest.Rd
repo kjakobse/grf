@@ -24,7 +24,8 @@ Xi using only trees that did not use the i-th training example). To
 make predictions at new data points, provide a matrix with new values
 of the covariates. Note the matrix should have the same number of columns
 as the training matrix, and that the columns must appear in the same order.
-To obtain predictions with error estimates on a test set, provide a list
+Note data frames can be provided, and that they are converted to matrix. 
+To obtain predictions on a test set with error estimates, provide a list
 with named elements "X", "Y.centered", and "W.centered".}
 
 \item{linear.correction.variables}{Optional subset of indexes for variables to be used in local

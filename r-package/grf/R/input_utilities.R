@@ -163,29 +163,17 @@ validate_ll_cutoff <- function(ll.split.cutoff,  num.rows) {
 }
 
 validate_newdata <- function(newdata, X, allow.na = FALSE) {
-  if (is.list(newdata)) {
-    if (any(names(newdata) == "X")) {
+  if (is.list(newdata) && sort(names(newdata)) == c("W.centered", "X", "Y.centered")) {
       validate_X(newdata[["X"]], allow.na = allow.na)
       if (ncol(newdata[["X"]]) != ncol(X)) {
         stop("element 'X' in newdata must have the same number of columns as the training matrix.")
       }
-    } else {
-      stop("newdata must have an element named 'X'.")
-    }
-    if (any(names(newdata) == "Y.centered")) {
       if (length(newdata[["Y.centered"]]) != nrow(newdata[["X"]])) {
         stop("Y.centered in newdata has incorrect length")
       }
-    } else {
-      stop("newdata must have an element named 'Y.centered'.")
-    }
-    if (any(names(newdata) == "W.centered")) {
       if (length(newdata[["W.centered"]]) != nrow(newdata[["X"]])) {
         stop("W.centered in newdata has incorrect length")
       }
-    } else {
-      stop("newdata must have an element named 'W.centered'.")
-    }
   } else {
     validate_X(newdata, allow.na = allow.na)
     if (ncol(newdata) != ncol(X)) {

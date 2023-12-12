@@ -305,7 +305,8 @@ causal_forest <- function(X, Y, W,
 #'                make predictions at new data points, provide a matrix with new values
 #'                of the covariates. Note the matrix should have the same number of columns
 #'                as the training matrix, and that the columns must appear in the same order.
-#'                To obtain predictions with error estimates on a test set, provide a list
+#'                Note data frames can be provided, and that they are converted to matrix. 
+#'                To obtain predictions on a test set with error estimates, provide a list
 #'                with named elements "X", "Y.centered", and "W.centered".
 #' @param linear.correction.variables Optional subset of indexes for variables to be used in local
 #'                   linear prediction. If NULL, standard GRF prediction is used. Otherwise,
@@ -420,7 +421,7 @@ predict.causal_forest <- function(object, newdata = NULL,
 
    if (!is.null(newdata)) {
      validate_newdata(newdata, X, allow.na = allow.na)
-     if (is.list(newdata)) {
+     if (is.list(newdata) && sort(names(newdata)) == c("W.centered", "X", "Y.centered")) {
        test.data <- create_train_matrices(newdata[["X"]], outcome = newdata[["Y.centered"]], treatment = newdata[["W.centered"]])
        names(test.data)[names(test.data) == "outcome.index"] <- "test.outcome.index"
        names(test.data)[names(test.data) == "treatment.index"] <- "test.treatment.index"
